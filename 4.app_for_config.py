@@ -1,17 +1,19 @@
 import json
 
+
 class AppConfig:
 
     @classmethod
     def load_config(cls, file_path):
         with open(file_path) as file:
+            # загружаем файл в json и присваиваем его значение атрибуту класса
             cls.config = json.load(file)
         return cls.config
 
     @classmethod
     def get_config(cls, key):
         if cls.config is None:
-            raise ValueError("Configuration not loaded. Use AppConfig.load_config(file_path) first.")
+            raise ValueError("Configuration not loaded")
         if '.' in key:
             keys = key.split('.')
             current = cls.config
@@ -25,6 +27,7 @@ class AppConfig:
             return cls.config[key]
         else:
             return None
+
 
 # Загрузка конфигурации при запуске приложения
 AppConfig.load_config('app_config.json')
